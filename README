@@ -5,6 +5,38 @@ Trinidad Daemon Extension
 
 Extension to run Trinidad server as a daemon.
 
+[WARNING] This extension only works with Trinidad 0.8.3 or above.
+
 # INSTALLATION
 
-Still in development
+jruby -S gem install trinidad_daemon_extension
+
+# USAGE
+
+This extension can be enabled from the Trinidad's configuration file or from the command line.
+It uses a temporal directory to write the pid file but its route can be overrided.
+
+  * To enable it from the configuration file you have to add a section "extensions" to the root of the file and the section "daemon" to this one. The pid file can be specified there:
+
+    --
+      extensions:
+        daemon:
+          pid_file: ./trinidad.pid # this is optional by default the extension writes the pid file into a temporal directory.
+
+  * To enable it from the command line you have to load the extension first and the add one of these options:
+
+     -d, --daemonize [PID_FILE]
+
+     for instance: 
+
+     $ jruby -S trinidad --load daemon --daemonize ./trinidad.pid
+
+# TODO
+
+  * enable logging. Right now the Tomcat's log is not written anywhere.
+
+You can find further information on how to write your onw extension in the wiki: http://wiki.github.com/calavera/trinidad/extensions
+
+# Copyright
+
+Copyright (c) 2010 David Calavera. See LICENSE for details.
