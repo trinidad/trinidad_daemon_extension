@@ -23,7 +23,7 @@ It uses a temporal directory to write the pid file but its route can be override
         daemon:
           pid_file: ./trinidad.pid # this is optional by default the extension writes the pid file into a temporal directory.
 
-  * To enable it from the command line you have to load the extension first and the add one of these options:
+  * To enable it from the command line you have to load the extension first and then add one of these options:
 
      -d, --daemonize [PID_FILE]
 
