@@ -47,6 +47,10 @@ class TrinidadDaemon {
         return tomcat.addContext(contextPath, baseDir);
     }
 
+    public void stop() throws Exception {
+        tomcat.stop();
+    }
+
     public void start() {
         try {
             Daemon daemon = new Daemon();
