@@ -8,11 +8,25 @@ require File.expand_path('../../trinidad-libs/trinidad-daemon-extension', __FILE
 
 module Trinidad
   module Extensions
-    class DaemonServerExtension < ServerExtension
+    module Daemon
       VERSION = '0.1.0'
+      
+      class DaemonServerExtension < ServerExtension
+        def configure(tomcat)
+          org.jruby.trinidad.TrinidadDaemon.new(tomcat, @options[:pid_file])
+        end
 
-      def configure(tomcat)
-        org.jruby.trinidad.TrinidadDaemon.new(tomcat, @options[:pid_file])
+        def override_tomcat?; true; end
+      end
+
+      class DaemonOptionsExtension < OptionsExtension
+        def configure(parser, default_options)
+          parser.on('-d', '--daemonize [PID_FILE]', 'run Trinidad as a daemon, pid_file by default is ENV[$TMPDIR]/trinidad.pid') do |pid|
+            extensions = default_options[:extensions] || {}
+            extensions[:daemon] = {:pid_file => pid}
+            default_options[:extensions] = extensions
+          end
+        end
       end
     end
   end
