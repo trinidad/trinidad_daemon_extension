@@ -100,7 +100,7 @@ task :release => :build do
   sh "gem push pkg/#{name}-#{version}.gem"
 end
 
-task :build => ['ant:clean', 'ant:jar', 'gemspec'] do
+task :build => ['ant:build', 'gemspec'] do
   sh "mkdir -p pkg"
   sh "gem build #{gemspec_file}"
   sh "mv #{gem_file} pkg"
