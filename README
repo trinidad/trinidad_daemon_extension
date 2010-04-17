@@ -35,7 +35,7 @@ It uses a temporal directory to write the pid file but its route can be override
 
   * enable logging. Right now the Tomcat's log is not written anywhere.
 
-You can find further information on how to write your onw extension in the wiki: http://wiki.github.com/calavera/trinidad/extensions
+You can find further information on how to write your own extension in the wiki: http://wiki.github.com/calavera/trinidad/extensions
 
 # Copyright
 
