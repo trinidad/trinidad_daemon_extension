@@ -18,7 +18,7 @@ namespace :ant do
     opts = {
       :fork => 'true',
       :failonerror => 'true',
-      :srcdir => 'src/main',
+      :srcdir => 'src/main/java',
       :destdir => TARGET_DIR,
       :classpath => Dir.glob('trinidad-libs/*.jar').join(':')
     }

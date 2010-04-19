@@ -1,11 +1,26 @@
 package org.jruby.trinidad;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
 import javax.servlet.ServletException;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.Server;
 import org.apache.catalina.Service;
 import org.apache.catalina.startup.Tomcat;
+import org.apache.juli.logging.LogFactory;
+import static com.sun.akuma.CLibrary.LIBC;
 import com.sun.akuma.Daemon;
 
 /**
@@ -14,7 +29,8 @@ import com.sun.akuma.Daemon;
 class TrinidadDaemon {
 
     private final Tomcat tomcat;
-    private String pidFile = System.getenv().get("TMPDIR") + "/trinidad.pid";
+    private String pidFile = System.getenv().get("TMPDIR") + "trinidad.pid";
+    private Map<String, String> loggerOptions = new HashMap<String, String>();
 
     public TrinidadDaemon(Tomcat tomcat) {
         this.tomcat = tomcat;
@@ -25,6 +41,11 @@ class TrinidadDaemon {
         if (pidFile != null) {
             this.pidFile = pidFile;
         }
+    }
+
+    public TrinidadDaemon(Tomcat tomcat, String pidFile, Map<String, String> loggerOptions) {
+      this(tomcat, pidFile);
+      this.loggerOptions = loggerOptions;
     }
 
     public String getPidFile() {
@@ -52,9 +73,14 @@ class TrinidadDaemon {
     }
 
     public void start() {
+      configureLogger();
+
         try {
             Daemon daemon = new Daemon();
             if(daemon.isDaemonized()) {
+                System.out.println("Starting Trinidad as a daemon");
+                System.out.println("To stop it, kill -s SIGINT " + LIBC.getpid());
+
                 daemon.init(pidFile);
             } else {
                 daemon.daemonize();
@@ -66,5 +92,26 @@ class TrinidadDaemon {
             System.err.println("Error daemonizing Trinidad: " + e.getMessage());
             System.exit(1);
         }
+    }
+
+    private void configureLogger() {
+      try {
+          final String log = loggerOptions.get("file");
+          final String level = loggerOptions.get("level");
+
+          final File logFile = new File(log);
+          final FileHandler handler = new FileHandler(log, true);
+          final Logger logger = Logger.getLogger("");
+
+          if(!logFile.exists()){
+              logFile.getParentFile().mkdirs();
+              logFile.createNewFile();
+          }
+
+          handler.setFormatter(new SimpleFormatter());
+          logger.addHandler(handler);
+      } catch (Exception e) {
+          System.err.println("Error configuring the daemon's log: " + e.getMessage());
+      }
     }
 }

@@ -14,10 +14,24 @@ module Trinidad
 
     class DaemonServerExtension < ServerExtension
       def configure(tomcat)
-        org.jruby.trinidad.TrinidadDaemon.new(tomcat, @options[:pid_file])
+        org.jruby.trinidad.TrinidadDaemon.new(tomcat, @options[:pid_file], logger_options)
       end
 
       def override_tomcat?; true; end
+
+      def logger_options
+        log = @options[:log] || {}
+        log[:file] ||= 'log/trinidad.log'
+
+        level = log[:level] || 'INFO'
+        unless %w{ALL CONFIG FINE FINER FINEST INFO OFF SEVERE WARNING}.include?(level)
+          puts "Invalid log level #{level}, using default: INFO"
+        end
+        log[:level] = level
+        log = Hash[log.map{|k, v| [k.to_s, v]}]
+
+        Java::java.util.HashMap.new(log)
+      end
     end
 
     class DaemonOptionsExtension < OptionsExtension
