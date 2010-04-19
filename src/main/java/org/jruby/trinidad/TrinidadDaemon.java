@@ -1,14 +1,9 @@
 package org.jruby.trinidad;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
 import java.util.logging.FileHandler;
-import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -73,12 +68,12 @@ class TrinidadDaemon {
     }
 
     public void start() {
-      configureLogger();
+        String log = configureLogger();
 
         try {
             Daemon daemon = new Daemon();
             if(daemon.isDaemonized()) {
-                System.out.println("Starting Trinidad as a daemon");
+                System.out.println("Starting Trinidad as a daemon, writing log into " + log);
                 System.out.println("To stop it, kill -s SIGINT " + LIBC.getpid());
 
                 daemon.init(pidFile);
@@ -94,11 +89,11 @@ class TrinidadDaemon {
         }
     }
 
-    private void configureLogger() {
-      try {
-          final String log = loggerOptions.get("file");
-          final String level = loggerOptions.get("level");
+    private String configureLogger() {
+      final String log = loggerOptions.get("file");
+      final String level = loggerOptions.get("level");
 
+      try {
           final File logFile = new File(log);
           final FileHandler handler = new FileHandler(log, true);
           final Logger logger = Logger.getLogger("");
@@ -113,5 +108,7 @@ class TrinidadDaemon {
       } catch (Exception e) {
           System.err.println("Error configuring the daemon's log: " + e.getMessage());
       }
+
+      return log;
     }
 }
