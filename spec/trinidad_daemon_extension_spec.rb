@@ -53,7 +53,7 @@ describe Trinidad::Extensions::DaemonServerExtension do
 
     log = extension.logger_options
     log['file'].should == 'log/trinidad.log'
-    log['level'].should == 'LEVEL'
+    log['level'].should == 'INFO'
   end
 end
 

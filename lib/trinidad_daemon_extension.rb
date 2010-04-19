@@ -26,6 +26,7 @@ module Trinidad
         level = log[:level] || 'INFO'
         unless %w{ALL CONFIG FINE FINER FINEST INFO OFF SEVERE WARNING}.include?(level)
           puts "Invalid log level #{level}, using default: INFO"
+          level = 'INFO'
         end
         log[:level] = level
         log = Hash[log.map{|k, v| [k.to_s, v]}]
