@@ -1,3 +1,7 @@
+0.1.1 (2010-04-19)
+
+* logging enabled
+
 0.1.0 (2010-04-17)
  
-  * First release
+* First release
