@@ -34,7 +34,7 @@ class TrinidadDaemon {
     public TrinidadDaemon(Tomcat tomcat, String pidFile) {
         this(tomcat);
         if (pidFile != null) {
-            this.pidFile = pidFile;
+            this.pidFile = new File(pidFile).getAbsolutePath();
         }
     }
 
