@@ -14,7 +14,7 @@ module Trinidad
 
     class DaemonServerExtension < ServerExtension
       def configure(tomcat)
-        org.jruby.trinidad.TrinidadDaemon.new(tomcat, @options[:pid_file], logger_options)
+        org.jruby.trinidad.TrinidadDaemon.new(tomcat, @options[:pid_file], logger_options, jvm_args)
       end
 
       def override_tomcat?; true; end
@@ -32,6 +32,10 @@ module Trinidad
         log = Hash[log.map{|k, v| [k.to_s, v]}]
 
         Java::java.util.HashMap.new(log)
+      end
+
+      def jvm_args
+        (@options[:jvm_args] ? @options[:jvm_args].split : []).to_java(:string)
       end
     end
 

@@ -17,6 +17,7 @@ import org.apache.catalina.startup.Tomcat;
 import org.apache.juli.logging.LogFactory;
 import static com.sun.akuma.CLibrary.LIBC;
 import com.sun.akuma.Daemon;
+import com.sun.akuma.JavaVMArguments;
 
 /**
  * Decorator to daemonize the process
@@ -26,6 +27,7 @@ class TrinidadDaemon {
     private final Tomcat tomcat;
     private String pidFile = System.getenv().get("TMPDIR") + "trinidad.pid";
     private Map<String, String> loggerOptions = new HashMap<String, String>();
+    private String[] jvmArgs;
 
     public TrinidadDaemon(Tomcat tomcat) {
         this.tomcat = tomcat;
@@ -41,6 +43,12 @@ class TrinidadDaemon {
     public TrinidadDaemon(Tomcat tomcat, String pidFile, Map<String, String> loggerOptions) {
       this(tomcat, pidFile);
       this.loggerOptions = loggerOptions;
+    }
+
+    public TrinidadDaemon(Tomcat tomcat, String pidFile, Map<String, String> loggerOptions,
+        String[] jvmArgs) {
+      this(tomcat, pidFile, loggerOptions);
+      this.jvmArgs = jvmArgs;
     }
 
     public String getPidFile() {
@@ -78,7 +86,7 @@ class TrinidadDaemon {
 
                 daemon.init(pidFile);
             } else {
-                daemon.daemonize();
+                daemon.daemonize(configureJVMArguments());
                 System.exit(0);
             }
             tomcat.start();
@@ -87,6 +95,23 @@ class TrinidadDaemon {
             System.err.println("Error daemonizing Trinidad: " + e.getMessage());
             System.exit(1);
         }
+    }
+
+    private JavaVMArguments configureJVMArguments() {
+        JavaVMArguments args = new JavaVMArguments();
+        for (String arg : jvmArgs) {
+            args.add(arg);
+        }
+
+        JavaVMArguments currentJVMArgs = JavaVMArguments.current();
+        for (String arg : currentJVMArgs) {
+            // I don't understand this hack but without it the daemon goes off, could be others
+            if (!arg.startsWith("-Xmx") && !arg.endsWith("java")) { 
+                args.add(arg);
+            }
+        }
+
+        return args;
     }
 
     private String configureLogger() {

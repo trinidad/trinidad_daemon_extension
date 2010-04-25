@@ -55,6 +55,14 @@ describe Trinidad::Extensions::DaemonServerExtension do
     log['file'].should == 'log/trinidad.log'
     log['level'].should == 'INFO'
   end
+
+  it "allows to pass jvm arguments to the daemon" do
+    extension = Trinidad::Extensions::DaemonServerExtension.new({
+      :jvm_args => '-Xmx=2048m -XX:MaxPermSize=2048m'
+    })
+
+    extension.jvm_args.should have(2).arguments
+  end
 end
 
 describe Trinidad::Extensions::DaemonOptionsExtension do

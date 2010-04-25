@@ -41,6 +41,13 @@ By default it writes the logs into the file log/trinidad.log with the level INFO
             file: trinidad.log # where the daemon writes its output
             level: ALL # severity level, it cn be one of these: ALL, CONFIG, FINE, FINER, FINEST, INFO, OFF, SEVERE, WARNING 
 
+The extension also allows to add new JVM arguments to run the daemon with. They just need to be added into the configuration file:
+
+    ---
+      extensions:
+        daemon:
+          jvm_args: '-XX:MaxPermSize=512m'
+
 You can find further information on how to write your own extension in the wiki: http://wiki.github.com/calavera/trinidad/extensions
 
 # Copyright
