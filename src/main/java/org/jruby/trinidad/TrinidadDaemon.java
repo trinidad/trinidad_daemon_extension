@@ -97,7 +97,7 @@ class TrinidadDaemon {
         }
     }
 
-    private JavaVMArguments configureJVMArguments() {
+    private JavaVMArguments configureJVMArguments() throws Exception {
         JavaVMArguments args = new JavaVMArguments();
         for (String arg : jvmArgs) {
             args.add(arg);
