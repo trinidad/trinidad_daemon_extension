@@ -122,6 +122,7 @@ class TrinidadDaemon {
           final File logFile = new File(log);
           final FileHandler handler = new FileHandler(log, true);
           final Logger logger = Logger.getLogger("");
+          logger.setLevel(Level.parse(level));
 
           if(!logFile.exists()){
               logFile.getParentFile().mkdirs();
