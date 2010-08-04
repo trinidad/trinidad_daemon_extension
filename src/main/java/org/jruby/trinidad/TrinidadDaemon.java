@@ -106,7 +106,7 @@ class TrinidadDaemon {
         JavaVMArguments currentJVMArgs = JavaVMArguments.current();
         for (String arg : currentJVMArgs) {
             // I don't understand this hack but without it the daemon goes off, could be others
-            if (!arg.startsWith("-Xmx") && !arg.endsWith("java")) { 
+            if (!arg.endsWith("java")) { 
                 args.add(arg);
             }
         }
