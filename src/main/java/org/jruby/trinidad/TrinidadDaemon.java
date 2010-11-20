@@ -81,7 +81,9 @@ class TrinidadDaemon {
         try {
             Daemon daemon = new Daemon();
             if(daemon.isDaemonized()) {
-                System.out.println("Starting Trinidad as a daemon, writing log into " + log);
+                System.out.println("Starting Trinidad as a daemon");
+                if (log != null)
+                    System.out.println("Writing log into: " + log);
                 System.out.println("To stop it, kill -s SIGINT " + LIBC.getpid());
 
                 daemon.init(pidFile);
@@ -106,7 +108,7 @@ class TrinidadDaemon {
         JavaVMArguments currentJVMArgs = JavaVMArguments.current();
         for (String arg : currentJVMArgs) {
             // I don't understand this hack but without it the daemon goes off, could be others
-            if (!arg.endsWith("java")) { 
+            if (!arg.endsWith("java")) {
                 args.add(arg);
             }
         }
@@ -115,6 +117,9 @@ class TrinidadDaemon {
     }
 
     private String configureLogger() {
+      if (loggerOptions == null)
+          return null;
+
       final String log = loggerOptions.get("file");
       final String level = loggerOptions.get("level");
 

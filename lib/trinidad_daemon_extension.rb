@@ -20,6 +20,7 @@ module Trinidad
       def override_tomcat?; true; end
 
       def logger_options
+        return if @options.has_key?(:nolog)
         log = @options[:log] || {}
         log[:file] ||= 'log/trinidad.log'
 
