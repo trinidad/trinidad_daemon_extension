@@ -9,7 +9,7 @@ require File.expand_path('../../trinidad-libs/trinidad-daemon-extension', __FILE
 module Trinidad
   module Extensions
     module Daemon
-      VERSION = '0.2.2'
+      VERSION = '0.2.3'
     end
 
     class DaemonServerExtension < ServerExtension

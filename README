@@ -41,6 +41,13 @@ By default it writes the logs into the file log/trinidad.log with the level INFO
             file: trinidad.log # where the daemon writes its output
             level: ALL # severity level, it cn be one of these: ALL, CONFIG, FINE, FINER, FINEST, INFO, OFF, SEVERE, WARNING 
 
+This log is enabled by default but if we don't need it or we are using another logger system we can also disable it:
+
+    ---
+      extension:
+        daemon:
+          nolog:
+
 The extension also allows to add new JVM arguments to run the daemon with. They just need to be added into the configuration file:
 
     ---
