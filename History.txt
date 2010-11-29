@@ -1,3 +1,7 @@
+== 0.2.4 (2010-11-29)
+
+* Don't modify the current directory before init the daemon. This fixes TRINIDAD-#30 and TRINIDAD_DAEMON_EXTENSION-#4.
+
 == 0.2.3 (2010-11-20)
 
 * Allow to disable daemon log
