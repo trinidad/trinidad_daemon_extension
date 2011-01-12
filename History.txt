@@ -1,3 +1,7 @@
+== 0.2.5 (2011-01-12)
+
+* Remove the option -d because colides with the option --dir. The option --daemonize is still present.
+
 == 0.2.4 (2010-11-29)
 
 * Don't modify the current directory before init the daemon. This fixes TRINIDAD-#30 and TRINIDAD_DAEMON_EXTENSION-#4.
