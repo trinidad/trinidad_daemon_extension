@@ -71,7 +71,7 @@ describe Trinidad::Extensions::DaemonOptionsExtension do
     options = {}
 
     subject.configure(parser, options)
-    parser.parse! '-d /tmp/trinidad.pid'.split
+    parser.parse! '--daemonize /tmp/trinidad.pid'.split
 
     options[:extensions].keys.should include(:daemon)
     options[:extensions][:daemon].should include(:pid_file)

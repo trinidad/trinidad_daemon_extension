@@ -25,9 +25,9 @@ It uses a temporal directory to write the pid file but its route can be override
 
   * To enable it from the command line you have to load the extension first and then add one of these options:
 
-     -d, --daemonize [PID_FILE]
+     --daemonize [PID_FILE]
 
-     for instance: 
+     for instance:
 
      $ jruby -S trinidad --load daemon --daemonize ./trinidad.pid
 
@@ -39,7 +39,7 @@ By default it writes the logs into the file log/trinidad.log with the level INFO
         daemon:
           log:
             file: trinidad.log # where the daemon writes its output
-            level: ALL # severity level, it cn be one of these: ALL, CONFIG, FINE, FINER, FINEST, INFO, OFF, SEVERE, WARNING 
+            level: ALL # severity level, it cn be one of these: ALL, CONFIG, FINE, FINER, FINEST, INFO, OFF, SEVERE, WARNING
 
 This log is enabled by default but if we don't need it or we are using another logger system we can also disable it:
 
