@@ -31,23 +31,6 @@ It uses a temporal directory to write the pid file but its route can be override
 
      $ jruby -S trinidad --load daemon --daemonize ./trinidad.pid
 
-The log file where the daemon writes its logs is also configurable from the trinidad's configuration file.
-By default it writes the logs into the file log/trinidad.log with the level INFO, to modify this behaviour you just need to add these lines under the daemon configuration:
-
-    ---
-      extensions:
-        daemon:
-          log:
-            file: trinidad.log # where the daemon writes its output
-            level: ALL # severity level, it cn be one of these: ALL, CONFIG, FINE, FINER, FINEST, INFO, OFF, SEVERE, WARNING
-
-This log is enabled by default but if we don't need it or we are using another logger system we can also disable it:
-
-    ---
-      extension:
-        daemon:
-          nolog:
-
 The extension also allows to add new JVM arguments to run the daemon with. They just need to be added into the configuration file:
 
     ---

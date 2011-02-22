@@ -25,37 +25,6 @@ describe Trinidad::Extensions::DaemonServerExtension do
     daemon.pid_file.should =~ /trinidad_pid.txt$/
   end
 
-  it "creates a default log info when it's not present" do
-    log = subject.logger_options
-    log['file'].should == 'log/trinidad.log'
-    log['level'].should == 'INFO'
-  end
-
-  it "uses the log configuration provided when it's present" do
-    extension = Trinidad::Extensions::DaemonServerExtension.new({
-      :log => {
-        :file => 'custom.log',
-        :level => 'ALL'
-      }
-    })
-
-    log = extension.logger_options
-    log['file'].should == 'custom.log'
-    log['level'].should == 'ALL'
-  end
-
-  it "uses the default level when it's not recognized" do
-    extension = Trinidad::Extensions::DaemonServerExtension.new({
-      :log => {
-        :level => 'LEVEL'
-      }
-    })
-
-    log = extension.logger_options
-    log['file'].should == 'log/trinidad.log'
-    log['level'].should == 'INFO'
-  end
-
   it "allows to pass jvm arguments to the daemon" do
     extension = Trinidad::Extensions::DaemonServerExtension.new({
       :jvm_args => '-Xmx=2048m -XX:MaxPermSize=2048m'

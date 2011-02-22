@@ -3,10 +3,6 @@ package org.jruby.trinidad;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import javax.servlet.ServletException;
 
@@ -14,7 +10,6 @@ import org.apache.catalina.Context;
 import org.apache.catalina.Server;
 import org.apache.catalina.Service;
 import org.apache.catalina.startup.Tomcat;
-import org.apache.juli.logging.LogFactory;
 import static com.sun.akuma.CLibrary.LIBC;
 import com.sun.akuma.Daemon;
 import com.sun.akuma.JavaVMArguments;
@@ -26,7 +21,6 @@ class TrinidadDaemon {
 
     private final Tomcat tomcat;
     private String pidFile = System.getenv().get("TMPDIR") + "trinidad.pid";
-    private Map<String, String> loggerOptions = new HashMap<String, String>();
     private String[] jvmArgs;
 
     public TrinidadDaemon(Tomcat tomcat) {
@@ -40,14 +34,8 @@ class TrinidadDaemon {
         }
     }
 
-    public TrinidadDaemon(Tomcat tomcat, String pidFile, Map<String, String> loggerOptions) {
+    public TrinidadDaemon(Tomcat tomcat, String pidFile, String[] jvmArgs) {
       this(tomcat, pidFile);
-      this.loggerOptions = loggerOptions;
-    }
-
-    public TrinidadDaemon(Tomcat tomcat, String pidFile, Map<String, String> loggerOptions,
-        String[] jvmArgs) {
-      this(tomcat, pidFile, loggerOptions);
       this.jvmArgs = jvmArgs;
     }
 
@@ -76,14 +64,10 @@ class TrinidadDaemon {
     }
 
     public void start() {
-        String log = configureLogger();
-
         try {
             Daemon daemon = new Daemon();
             if(daemon.isDaemonized()) {
                 System.out.println("Starting Trinidad as a daemon");
-                if (log != null)
-                    System.out.println("Writing log into: " + log);
                 System.out.println("To stop it, kill -s SIGINT " + LIBC.getpid());
 
                 daemon.init(pidFile);
@@ -115,32 +99,5 @@ class TrinidadDaemon {
         }
 
         return args;
-    }
-
-    private String configureLogger() {
-      if (loggerOptions == null)
-          return null;
-
-      final String log = loggerOptions.get("file");
-      final String level = loggerOptions.get("level");
-
-      try {
-          final File logFile = new File(log);
-          final FileHandler handler = new FileHandler(log, true);
-          final Logger logger = Logger.getLogger("");
-          logger.setLevel(Level.parse(level));
-
-          if(!logFile.exists()){
-              logFile.getParentFile().mkdirs();
-              logFile.createNewFile();
-          }
-
-          handler.setFormatter(new SimpleFormatter());
-          logger.addHandler(handler);
-      } catch (Exception e) {
-          System.err.println("Error configuring the daemon's log: " + e.getMessage());
-      }
-
-      return log;
     }
 }
