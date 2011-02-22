@@ -101,9 +101,6 @@ class TrinidadDaemon {
 
     private JavaVMArguments configureJVMArguments() throws Exception {
         JavaVMArguments args = new JavaVMArguments();
-        for (String arg : jvmArgs) {
-            args.add(arg);
-        }
 
         JavaVMArguments currentJVMArgs = JavaVMArguments.current();
         for (String arg : currentJVMArgs) {
@@ -111,6 +108,10 @@ class TrinidadDaemon {
             if (!arg.endsWith("java")) {
                 args.add(arg);
             }
+        }
+
+        for (String arg : jvmArgs) {
+            args.add(arg);
         }
 
         return args;
