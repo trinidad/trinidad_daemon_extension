@@ -1,3 +1,7 @@
+== 0.2.7 (2011-03-19)
+
+* Fix delegation issue to get the host
+
 == 0.2.6 (2011-02-22)
 
 * Fix issue overriding JVM arguments
