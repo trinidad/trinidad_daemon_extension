@@ -1,3 +1,7 @@
+== 0.2.8 (2011-04-05)
+
+* Fix optionParser error when adding custom arguments
+
 == 0.2.7 (2011-03-19)
 
 * Fix delegation issue to get the host
