@@ -93,14 +93,18 @@ class TrinidadDaemon {
 
         JavaVMArguments currentJVMArgs = JavaVMArguments.current();
         for (String arg : currentJVMArgs) {
+            if (arg.startsWith("-Xbootclasspath")) {
+                //add here the custom arguments, otherwhise are added after
+                //trinidad script and break optionParser
+                for (String custom : jvmArgs) {
+                    args.add(custom);
+                }
+            }
+
             // I don't understand this hack but without it the daemon goes off, could be others
             if (!arg.endsWith("java")) {
                 args.add(arg);
             }
-        }
-
-        for (String arg : jvmArgs) {
-            args.add(arg);
         }
 
         return args;
