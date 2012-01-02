@@ -46,4 +46,4 @@ Copy the hooks into git-hooks directory to .git/hooks to make sure the jar file 
 
 # Copyright
 
-Copyright (c) 2010 David Calavera. See LICENSE for details.
+Copyright (c) 2010-2012 David Calavera. See LICENSE for details.
