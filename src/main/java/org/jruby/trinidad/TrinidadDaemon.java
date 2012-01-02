@@ -48,6 +48,10 @@ class TrinidadDaemon {
         return tomcat.addWebapp(contextPath, baseDir);
     }
 
+    public Context addWebapp(Host host, String contextPath, String baseDir) throws ServletException {
+        return tomcat.addWebapp(host, contextPath, baseDir);
+    }
+
     public Service getService() {
         return tomcat.getService();
     }
