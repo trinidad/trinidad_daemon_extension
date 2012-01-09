@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 
 import org.apache.catalina.Context;
+import org.apache.catalina.Engine;
 import org.apache.catalina.Host;
 import org.apache.catalina.Server;
 import org.apache.catalina.Service;
@@ -62,6 +63,10 @@ class TrinidadDaemon {
 
     public Host getHost() {
         return tomcat.getHost();
+    }
+
+    public Engine getEngine() {
+        return tomcat.getEngine();
     }
 
     public Context addContext(String contextPath, String baseDir) {

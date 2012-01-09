@@ -1,3 +1,7 @@
+== 0.2.10 (2012-01-09)
+
+* Add engine method to the proxy
+
 == 0.2.9 (2012-01-02)
 
 * Fix Tomcat's decorator to work with Trinidad 1.3.0 and above
