@@ -58,10 +58,10 @@ Gem::Specification.new do |s|
     Rakefile
     lib/trinidad_daemon_extension.rb
     rakelib/build.rake
-    spec/spec.opts
     spec/spec_helper.rb
     spec/trinidad_daemon_extension_spec.rb
     trinidad-libs/akuma.jar
+    trinidad-libs/jna.jar
     trinidad-libs/trinidad-daemon-extension.jar
     trinidad_daemon_extension.gemspec
   ]

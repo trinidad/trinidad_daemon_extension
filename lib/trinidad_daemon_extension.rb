@@ -4,6 +4,7 @@ require 'trinidad/extensions'
 require 'trinidad/jars'
 
 require File.expand_path('../../trinidad-libs/akuma', __FILE__)
+require File.expand_path('../../trinidad-libs/jna', __FILE__)
 require File.expand_path('../../trinidad-libs/trinidad-daemon-extension', __FILE__)
 
 module Trinidad
