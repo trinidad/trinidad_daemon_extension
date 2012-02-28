@@ -1,3 +1,7 @@
+== 0.2.11 (coming-up)
+
+* update to akuma 1.7 - fixes init exec issue
+
 == 0.2.10 (2012-01-09)
 
 * Add engine method to the proxy

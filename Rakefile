@@ -45,13 +45,10 @@ end
 
 task :default => :spec
 
-require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new(:spec) do |spec|
-  spec.libs << 'lib' << 'spec'
-  spec.spec_opts = ['--options', 'spec/spec.opts']
-  spec.spec_files = FileList['spec/**/*_spec.rb']
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.rspec_opts = ['--color', "--format documentation"]
 end
-
 
 desc "Generate RCov test coverage and open in your browser"
 task :coverage do
