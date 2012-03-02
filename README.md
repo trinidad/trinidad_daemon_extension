@@ -36,7 +36,7 @@ accepted by the `jruby` command !
 ### Command line
 
 To enable the extension from the command line you have to load the extension 
-first and then use it's `--daemonize [PID_FILE]` option e.g. :
+first and then use it's `--daemonize [PID_FILE]` option :
 
     $ jruby -S trinidad --load daemon --daemonize ./trinidad.pid
 
