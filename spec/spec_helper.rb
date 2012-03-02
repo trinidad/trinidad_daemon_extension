@@ -12,7 +12,5 @@ RSpec.configure do |config|
   config.mock_with :mocha
 end
 
-require 'java'
-
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 require 'trinidad_daemon_extension'

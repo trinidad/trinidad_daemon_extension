@@ -1,7 +1,12 @@
 require 'rubygems'
-gem 'trinidad_jars'
-require 'trinidad/extensions'
+
+require 'trinidad'
 require 'trinidad/jars'
+require 'trinidad/extensions'
+
+require 'trinidad_daemon_extension/version'
+
+require 'java'
 
 require File.expand_path('../../trinidad-libs/akuma', __FILE__)
 require File.expand_path('../../trinidad-libs/jna', __FILE__)
@@ -9,9 +14,6 @@ require File.expand_path('../../trinidad-libs/trinidad-daemon-extension', __FILE
 
 module Trinidad
   module Extensions
-    module Daemon
-      VERSION = '0.2.10'
-    end
 
     class DaemonServerExtension < ServerExtension
       def configure(tomcat)
@@ -29,7 +31,7 @@ module Trinidad
       def configure(parser, default_options)
         parser.on('--daemonize', '--daemonize [PID_FILE]', 'run Trinidad as a daemon, pid_file by default is ENV[$TMPDIR]/trinidad.pid') do |pid|
           extensions = default_options[:extensions] || {}
-          extensions[:daemon] = {:pid_file => pid}
+          extensions[:daemon] = { :pid_file => pid }
           default_options[:extensions] = extensions
         end
       end

@@ -1,6 +1,5 @@
 require 'ant'
 require 'fileutils'
-include FileUtils
 
 TARGET_DIR = 'target'
 LIBS_DIR = 'trinidad-libs'
@@ -9,8 +8,8 @@ JAR_NAME = 'trinidad-daemon-extension.jar'
 namespace :ant do
   desc 'Clean the java target directory'
   task :clean do
-    rm_f TARGET_DIR
-    rm_f "#{LIBS_DIR}/#{JAR_NAME}"
+    FileUtils.rm_f TARGET_DIR
+    FileUtils.rm_f "#{LIBS_DIR}/#{JAR_NAME}"
   end
 
   desc 'Compile the java classes'
@@ -23,7 +22,7 @@ namespace :ant do
       :classpath => Dir.glob('trinidad-libs/*.jar').join(':')
     }
 
-    mkdir_p TARGET_DIR
+    FileUtils.mkdir_p TARGET_DIR
     ant.javac(opts)
   end
 
