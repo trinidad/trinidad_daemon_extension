@@ -44,13 +44,6 @@ first and then use it's `--daemonize [PID_FILE]` option :
 You can find further information on how to write your own extension in the wiki: 
 http://wiki.github.com/calavera/trinidad/extensions
 
-## Development
-
-Copy the hooks into *git-hooks* directory to *.git/hooks* to make sure the jar 
-file is updated when the java code is modified.
-
-You will need to have a JDK installed due to ant invoking `javac` and `jar`.
-
 ## Copyright
 
 Copyright (c) 2010-2012 David Calavera. See LICENSE for details.

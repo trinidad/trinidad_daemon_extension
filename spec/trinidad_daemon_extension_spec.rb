@@ -11,7 +11,7 @@ describe Trinidad::Extensions::DaemonServerExtension do
   it "bypass the control to the daemon" do
     daemon = subject.configure(@tomcat)
     daemon.should_not be_nil
-    daemon.should be_instance_of(org.jruby.trinidad.TrinidadDaemon)
+    daemon.should be_instance_of(Trinidad::Extensions::Daemon::TomcatWrapper)
   end
 
   it "uses a temporal directory to write the pid file by default" do
@@ -46,4 +46,85 @@ describe Trinidad::Extensions::DaemonOptionsExtension do
     options[:extensions][:daemon].should include(:pid_file)
     options[:extensions][:daemon][:pid_file].should == '/tmp/trinidad.pid'
   end
+end
+
+class Java::OrgApacheCatalinaStartup::Tomcat
+  
+  field_reader :basedir # only setBaseDir
+  field_reader :port, :hostname # only setters
+  
+end
+
+describe Trinidad::Extensions::Daemon::TomcatWrapper do
+
+  it "responds to tomcat methods" do
+    tomcat_wrapper.respond_to?(:start).should be true
+    tomcat_wrapper.respond_to?(:stop).should be true
+    
+    tomcat_wrapper.respond_to?(:base_dir=).should be true
+    tomcat_wrapper.respond_to?(:setBaseDir).should be true
+    
+    tomcat_wrapper.respond_to?(:port=).should be true
+    tomcat_wrapper.respond_to?(:setPort).should be true
+  end
+  
+  it "configures a real tomcat" do
+    wrapper = tomcat_wrapper
+    tomcat = wrapper.instance_variable_get(:'@tomcat')
+    
+    wrapper.base_dir = '/base_dir'
+    wrapper.hostname = 'local-host1'
+    wrapper.server.address = 'local-host2'
+    wrapper.port = 42
+    wrapper.host.app_base = '/app-base'
+    wrapper.enable_naming
+    
+    tomcat.basedir.should == '/base_dir'
+    tomcat.hostname.should == 'local-host1'
+    tomcat.server.address.should == 'local-host2'
+    tomcat.port.should == 42
+    tomcat.host.app_base.should == '/app-base'
+  end
+  
+  def tomcat_wrapper
+    Trinidad::Extensions::Daemon::TomcatWrapper.new Trinidad::Tomcat::Tomcat.new
+  end
+  
+  context "mocked" do
+    
+    @@tmpdir = nil
+    before :all do
+      @@tmpdir = ENV['TMPDIR']
+      ENV['TMPDIR'] = File.dirname(__FILE__)
+    end
+    
+    after :all do
+      ENV['TMPDIR'] = @@tmpdir
+    end
+    
+    before :each do
+      @tomcat = mock('tomcat')
+      @tomcat_wrapper = Trinidad::Extensions::Daemon::TomcatWrapper.new(@tomcat)
+    end    
+    
+    it "starts tomcat" do
+      current_pid = $$
+      com.sun.akuma.Daemon.expects(:new).returns daemon = mock("daemon")
+      daemon.expects(:isDaemonized).returns true
+      daemon.expects(:init).with("#{File.dirname(__FILE__)}/trinidad.pid")
+
+      @tomcat.expects(:start)
+      @tomcat.expects(:server).returns server = mock("tomcat.server")
+      server.expects(:await)
+
+      @tomcat_wrapper.start
+    end
+
+    it "stops tomcat" do
+      @tomcat.expects(:stop)
+      @tomcat_wrapper.stop
+    end
+    
+  end
+  
 end

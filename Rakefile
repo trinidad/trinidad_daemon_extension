@@ -84,7 +84,7 @@ task :release => :build do
   sh "gem push pkg/#{name}-#{version}.gem"
 end
 
-task :build => ['ant:build', 'validate'] do
+task :build => :validate do
   sh "mkdir -p pkg"
   sh "gem build #{gemspec_file}"
   sh "mv #{gem_file} pkg"
