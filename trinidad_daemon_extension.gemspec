@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   
   s.authors  = ["David Calavera"]
   s.email    = 'calavera@apache.org'
-  s.homepage = 'http://github.com/calavera/trinidad_daemon_extension'
+  s.homepage = 'http://github.com/trinidad/trinidad_daemon_extension'
   s.rdoc_options = ["--charset=UTF-8"]
   s.extra_rdoc_files = %w[README.md LICENSE]
   
