@@ -1,17 +1,16 @@
 begin
-  require 'spec'
+  require 'rspec'
 rescue LoadError
   require 'rubygems'
   gem 'rspec'
-  require 'spec'
+  require 'rspec'
+end
+
+require 'mocha'
+
+RSpec.configure do |config|
+  config.mock_with :mocha
 end
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
-
-require 'java'
 require 'trinidad_daemon_extension'
-require 'mocha'
-
-Spec::Runner.configure do |config|
-  config.mock_with :mocha
-end

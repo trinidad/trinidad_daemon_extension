@@ -1,7 +1,0 @@
-#!/bin/bash
-
-git log --name-only -n1 | grep 'TrinidadDaemon.java' > /dev/null
-
-if [ $? = 0 ]; then
-  rake "ant:build" && git add trinidad-libs/trinidad-daemon-extension.jar && git ci -m "update extension jar with the latest source code"
-fi
