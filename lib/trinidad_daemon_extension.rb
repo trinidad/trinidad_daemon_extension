@@ -1,16 +1,10 @@
-require 'rubygems'
-
 require 'trinidad'
 require 'trinidad/jars'
 require 'trinidad/extensions'
 
-require 'java'
-
-require File.expand_path('../../trinidad-libs/akuma', __FILE__)
-require File.expand_path('../../trinidad-libs/jna', __FILE__)
-
-require 'trinidad_daemon_extension/version'
+require 'trinidad_daemon_extension/jars'
 require 'trinidad_daemon_extension/tomcat_wrapper'
+require 'trinidad_daemon_extension/version'
 
 module Trinidad
   module Extensions
