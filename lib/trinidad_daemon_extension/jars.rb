@@ -1,4 +1,9 @@
 require 'java'
 
-require File.expand_path('../../../trinidad-libs/akuma', __FILE__)
-require File.expand_path('../../../trinidad-libs/jna', __FILE__)
+trinidad_libs = 
+  defined?(Trinidad::Extensions::Daemon::TRINIDAD_LIBS) ?
+  Trinidad::Extensions::Daemon::TRINIDAD_LIBS : 
+  File.expand_path('../../../trinidad-libs', __FILE__)
+
+require File.join(trinidad_libs, 'akuma.jar')
+require File.join(trinidad_libs, 'jna.jar')
