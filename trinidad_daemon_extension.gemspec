@@ -29,8 +29,7 @@ Gem::Specification.new do |s|
   
   s.files = `git ls-files`.split("\n").sort.
     reject { |file| file =~ /^\./ }.
-    reject { |file| file =~ /^(rdoc|pkg|src|git-hooks)/ }.
-    reject { |file| file =~ /tomcat-core.jar/ } # only for compiling !
+    reject { |file| file =~ /^(rdoc|pkg|src|git-hooks)/ }
   
   s.test_files = s.files.select { |path| path =~ /^spec\/.*_spec\.rb/ }
   
