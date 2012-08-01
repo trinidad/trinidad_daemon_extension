@@ -22,10 +22,10 @@ Gem::Specification.new do |s|
   
   s.require_paths = %w[lib]
   
-  s.add_dependency('trinidad_jars', ">= 1.0.0")
+  s.add_dependency('trinidad', ">= 1.3.5")
   
-  s.add_development_dependency('rspec', '~> 2.8')
-  s.add_development_dependency('mocha', '>= 0.10.4')
+  s.add_development_dependency('rspec', '~> 2.10')
+  s.add_development_dependency('mocha', '>= 0.11')
   
   s.files = `git ls-files`.split("\n").sort.
     reject { |file| file =~ /^\./ }.

@@ -1,6 +1,4 @@
 require 'trinidad'
-require 'trinidad/jars'
-require 'trinidad/extensions'
 
 require 'trinidad_daemon_extension/jars'
 require 'trinidad_daemon_extension/tomcat_wrapper'
