@@ -32,7 +32,7 @@ module Trinidad
         end
         
         def start
-          daemon = com.sun.akuma.Daemon.new
+          daemon = com.sun.akuma.Daemon::WithoutChdir.new
           if daemon.isDaemonized
             pid = com.sun.akuma.CLibrary::LIBC.getpid
             puts "Starting Trinidad as a daemon"
