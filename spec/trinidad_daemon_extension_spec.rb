@@ -57,6 +57,10 @@ end
 
 describe Trinidad::Extensions::Daemon::TomcatWrapper do
 
+  let(:tomcat_wrapper) do
+    Trinidad::Extensions::Daemon::TomcatWrapper.new Trinidad::Tomcat::Tomcat.new
+  end
+  
   it "responds to tomcat methods" do
     tomcat_wrapper.respond_to?(:start).should be true
     tomcat_wrapper.respond_to?(:stop).should be true
@@ -86,10 +90,6 @@ describe Trinidad::Extensions::Daemon::TomcatWrapper do
     tomcat.host.app_base.should == '/app-base'
   end
   
-  def tomcat_wrapper
-    Trinidad::Extensions::Daemon::TomcatWrapper.new Trinidad::Tomcat::Tomcat.new
-  end
-  
   context "mocked" do
     
     @@tmpdir = nil
@@ -102,27 +102,27 @@ describe Trinidad::Extensions::Daemon::TomcatWrapper do
       ENV['TMPDIR'] = @@tmpdir
     end
     
-    before :each do
-      @tomcat = mock('tomcat')
-      @tomcat_wrapper = Trinidad::Extensions::Daemon::TomcatWrapper.new(@tomcat)
-    end    
+    let(:tomcat) { mock('tomcat') }
+    let(:tomcat_wrapper) do
+      Trinidad::Extensions::Daemon::TomcatWrapper.new tomcat
+    end
     
     it "starts tomcat" do
       current_pid = $$
-      com.sun.akuma.Daemon.expects(:new).returns daemon = mock("daemon")
+      com.sun.akuma.Daemon::WithoutChdir.expects(:new).returns daemon = mock("daemon")
       daemon.expects(:isDaemonized).returns true
       daemon.expects(:init).with("#{File.dirname(__FILE__)}/trinidad.pid")
 
-      @tomcat.expects(:start)
-      @tomcat.expects(:server).returns server = mock("tomcat.server")
+      tomcat.expects(:start)
+      tomcat.expects(:server).returns server = mock("tomcat.server")
       server.expects(:await)
 
-      @tomcat_wrapper.start
+      tomcat_wrapper.start
     end
 
     it "stops tomcat" do
-      @tomcat.expects(:stop)
-      @tomcat_wrapper.stop
+      tomcat.expects(:stop)
+      tomcat_wrapper.stop
     end
     
   end
