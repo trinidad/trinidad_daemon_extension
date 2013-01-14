@@ -1,0 +1,8 @@
+language: ruby
+#jdk:
+  #- oraclejdk7
+rvm:
+  - jruby-18mode
+  - jruby-19mode
+#before_install:
+  #- export JRUBY_OPTS="--server -Xcext.enabled=false -Xcompile.invokedynamic=false"
