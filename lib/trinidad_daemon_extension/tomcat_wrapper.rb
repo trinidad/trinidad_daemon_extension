@@ -74,7 +74,7 @@ module Trinidad
               if arg.to_java.startsWith("-Xbootclasspath")
                 # add here the custom arguments, otherwhise are added after
                 # trinidad script and break optionParser
-                jvm_args.each { |custom| args.add(custom) }
+                jvm_args.each { |custom| args.add(custom) } if jvm_args
               end
               # I don't understand this hack but without it the daemon goes off, 
               # could be others
