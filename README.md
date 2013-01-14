@@ -46,4 +46,5 @@ http://wiki.github.com/calavera/trinidad/extensions
 
 ## Copyright
 
-Copyright (c) 2010-2012 David Calavera. See LICENSE for details.
+Copyright (c) 2013 [Team Trinidad](https://github.com/trinidad). 
+See LICENSE (http://en.wikipedia.org/wiki/MIT_License) for details.
