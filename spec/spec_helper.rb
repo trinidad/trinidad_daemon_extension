@@ -1,12 +1,14 @@
 begin
   require 'rspec'
-rescue LoadError
-  require 'rubygems'
-  gem 'rspec'
-  require 'rspec'
+rescue LoadError => e
+  require('rubygems') && retry
+  raise e
 end
-
-require 'mocha'
+begin
+  require 'mocha/api'
+rescue LoadError
+  require 'mocha'
+end
 
 RSpec.configure do |config|
   config.mock_with :mocha
